@@ -1,7 +1,7 @@
 % Caso de estudio 1 - Motor CC apartado 1
 clc; clear ; close all
 
-% Par醡etros
+% Par谩metros
 Laa = 5*10^-6;
 J = 0.004;
 Ra = 0.2;
@@ -21,18 +21,18 @@ rank(Co); % = 3 por ende es controlable
 Ob = obsv(A,C);
 rank(Ob); % = 3 por ende es observable
 
-% Implementaci髇 de funciones a usar
+% Implementaci贸n de funciones a usar
 tf = 30; dt = 1*10^-5; t = 0:dt:(tf-dt); per = 15; %[seg]
 Tl = 1.15*10^-3;
-ref = pi/2*square(2*pi*t/per); % Funci髇 de referencia que varia entre pi/2 y -pi/2
-fTl = Tl/2*square(2*pi*t/per)+Tl/2; % Funci髇 de torque que varia entre 0 y 1.15*10^-3
+ref = pi/2*square(2*pi*t/per); % Funci贸n de referencia que varia entre pi/2 y -pi/2
+fTl = Tl/2*square(2*pi*t/per)+Tl/2; % Funci贸n de torque que varia entre 0 y 1.15*10^-3
 
 % LQR
-Q = diag([1 15000 1]);
-R = 8;
+Q = diag([1 900000 1]);
+R = 6;
 K = lqr(A,B,Q,R);
 
-% Ganancia de prealimentaci髇
+% Ganancia de prealimentaci贸n
 G = -inv(C*inv(A-B*K)*B);
 
 % Condiciones iniciales
@@ -41,7 +41,7 @@ X = zeros(3,n);
 X(1,1) = 0; %ia inicial
 X(2,1) = 0; %tita inicial
 
-% Iteraci髇
+% Iteraci贸n
 for i=1:1:n-1
     X_a = [X(1,i); X(2,i) ; X(3,i)];%[ia ; w ; tita]
     U = -K*X_a+ref(i)*G;
@@ -61,18 +61,18 @@ for i=1:1:n-1
     %X(:,i+1)=Xf;
 end
 
-% Gr醘icas
+% Gr谩ficas
 figure
 hold on; grid on;
 plot(t,ref);
 title('Referencia de entrada');
 xlabel('Tiempo [s]');
-ylabel('羘gulo [rad]');
+ylabel('脕ngulo [rad]');
 
 figure
 hold on; grid on;
 plot(t,fTl);
-title('Torque de perturbaci髇');
+title('Torque de perturbaci贸n');
 xlabel('Tiempo [s]');
 ylabel('Torque [Nm]');
 
@@ -81,10 +81,10 @@ figure
 plot(t,ref);
 hold on; grid on;
 plot(t,X(2,:),'r');
-title('羘gulo del motor');
+title('Posici贸n angular del motor');
 xlabel('Tiempo [s]');
-ylabel('羘gulo [rad]');
-legend('referencia','?(t)')
+ylabel('Posici贸n angular [rad]');
+legend('referencia','胃(t)')
 
 figure
 %subplot(2,1,2);
