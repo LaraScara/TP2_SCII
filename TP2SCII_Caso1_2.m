@@ -42,7 +42,6 @@ Qo = diag([1 100000/1 1/1]);
 Ro = 5;
 Ko = lqr(Ao,Bo,Qo,Ro);
 
-
 % Implementación de funciones a usar
 tf = 30; dt = 1*10^-5; t = 0:dt:(tf-dt); per = 15; %[seg]
 Tl = 1.15*10^-3;
