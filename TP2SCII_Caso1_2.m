@@ -38,7 +38,8 @@ K4 = lqr(An,Bn,Q,R);
 K = K4(1:3);
 K_i = -K4(4);
 
-Qo = diag([1 100000/1 1/1]);    Ro=5;
+Qo = diag([1 100000/1 1/1]);
+Ro = 5;
 Ko = lqr(Ao,Bo,Qo,Ro);
 
 
