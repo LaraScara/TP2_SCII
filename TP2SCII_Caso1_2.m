@@ -1,7 +1,7 @@
 % Caso de estudio 1 - Motor CC apartado 2
 clc; clear ; close all
 
-% Par醡etros
+% Par谩metros
 Laa = 5*10^-3;
 J = 0.004;
 Ra = 0.2;
@@ -32,24 +32,21 @@ Bo = C';
 Co = B';
 
 % LQR	
-Q = diag([1 100 1 1000]);
-Q=1*diag([10 1/100 1/100 100000/2]);    R=10;
-R = 1000;
+Q = diag([10 1/1 1/1 1000000/1]);
+R = 500;
 K4 = lqr(An,Bn,Q,R);
 K = K4(1:3);
 K_i = -K4(4);
 
-Qo = diag([1 1 1]);
-Ro = 100;
-Qo=1e0*diag([1 10000/1 1/1]);    Ro=5;
+Qo = diag([1 100000/1 1/1]);    Ro=5;
 Ko = lqr(Ao,Bo,Qo,Ro);
 
 
-% Implementaci髇 de funciones a usar
+% Implementaci贸n de funciones a usar
 tf = 30; dt = 1*10^-5; t = 0:dt:(tf-dt); per = 15; %[seg]
 Tl = 1.15*10^-3;
-ref = pi/2*square(2*pi*t/per); % Funci髇 de referencia que varia entre pi/2 y -pi/2
-fTl = Tl/2*square(2*pi*t/per)+Tl/2; % Funci髇 de torque que varia entre 0 y 1.15*10^-3
+ref = pi/2*square(2*pi*t/per); % Funci贸n de referencia que varia entre pi/2 y -pi/2
+fTl = Tl/2*square(2*pi*t/per)+Tl/2; % Funci贸n de torque que varia entre 0 y 1.15*10^-3
 
 % Condiciones iniciales
 n = round(tf/dt);
@@ -64,7 +61,7 @@ Xhat(2,1) = 0; %tita_hat inicial
 Xhat(3,1) = 0; %wr_hat inicial
 %Up(1) = 0;
 
-% Iteraci髇
+% Iteraci贸n
 for i=1:1:n-1
     X_a = [X(1,i); X(2,i) ; X(3,i)]; %[ia ; tita ; w]
     Xhat_a = [Xhat(1,i) ; Xhat(2,i) ; Xhat(3,i)]; %[ia_hat ; tita_hat ; w_hat]
@@ -72,9 +69,7 @@ for i=1:1:n-1
     Yhat = Co*Xhat_a;
     psi_p = ref(i)-Y;
     psi(i+1) = psi(i)+psi_p*dt;
-    U = -K(2:3)*X_a(2:3)-K(1)*Xhat_a(1)+K_i*psi(i+1);% U estimando parametros
-    %U=-K*Xhat_a+K_i*psi(i+1); % U con las 3 variables de estado estimadas
-    %Up = [Up U];
+    U = -K(2:3)*X_a(2:3)-K(1)*Xhat_a(1)+K_i*psi(i+1);
     
     Xp_1 = -Ra/Laa*X_a(1)-Km/Laa*X_a(3)+1/Laa*U;  %ia_p
     Xp_2 = X_a(3);                               %tita_p
@@ -97,14 +92,26 @@ for i=1:1:n-1
     Xhat(3,i+1) = Xhatf(3);
 end
 
-% Gr醘icas
+% Gr谩ficas
 figure
-subplot(2,1,1);
+%subplot(2,1,1);
 plot(t,ref);
 grid on
 hold on
-plot(t,X(2,:),'r');title('angulo tita observado y con integrador');xlabel('tiempo[s]');ylabel('angulo[rad]');legend('REF','tita')
-subplot(2,1,2);
+plot(t,X(2,:),'r');
+title('Posici贸n angular del motor');
+xlabel('Tiempo [s]');
+ylabel('Posici贸n angular [rad]');
+legend('referencia','胃(t)')
+
+figure
+%subplot(2,1,2);
 grid on
 hold on
-plot(t,X(1,:),'r');title('corriente ia observada y con integrador');xlabel('tiempo[s]');ylabel('angulo[rad]');legend('Ia')
+plot(t,X(1,:),'r');
+title('Corriente de armadura');
+xlabel('Tiempo [s]');
+ylabel('Corriente [A]');
+legend('ia(t)')
+
+disp("Terminado")
