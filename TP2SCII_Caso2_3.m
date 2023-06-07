@@ -1,7 +1,7 @@
-% Caso de estudio 2 - P閚dulo invertido apartado 3
+% Caso de estudio 2 - P茅ndulo invertido apartado 3
 clc;clear all;close all
 
-% Par醡etros
+% Par谩metros
 m = 0.1;
 F = 0.1;
 l = 1.6;
@@ -10,7 +10,6 @@ M = 1.5;
 t_etapa = 1e-4; tF = 30;
 t = 0:t_etapa:tF;
 tiempo = round(tF/t_etapa);
-
 
 % Matrices x = [delta ; delta_p ; phi ; phi_p]
 A = [0 1 0 0;0 -F/M -m*g/M 0; 0 0 0 1; 0 F/(l*M) g*(m+M)/(l*M) 0];
@@ -29,25 +28,26 @@ Q = diag([1 1 1000 10000]);
 R = 10;
 K = lqr(A,B,Q,R);
 
-% Ganancia de prealimentaci髇
-G=-inv(C*inv(A-B*K)*B);
+% Ganancia de prealimentaci贸n
+G = -inv(C*inv(A-B*K)*B);
 
 % Referencia
-ref=0*t - 10;
+ref = 0*t - 10;
 
 % Condidiones iniciales
 x0 = [0 0 0 0];
-delta(1)=0;
-delta_p(1)=0;
-phi(1)=0;
+delta(1) = 0;
+delta_p(1) = 0;
+phi(1) = 0.1;
 phi_p(1) = 0;
 u(1) = 0;
 phi_pp = 0;
 
+% Iteraci贸n
 for i=1:1:tiempo
-x=[delta(i); delta_p(i); phi(i); phi_p(i)];
+x = [delta(i); delta_p(i); phi(i); phi_p(i)];
 
-u(i+1)=-K*x+ref(i)*G;
+u(i+1) = -K*x+ref(i)*G;
 
 delta_pp = 1/(M+m) *(-m*l*phi_pp*cos(phi(i))+m*l*(phi_p(i))^2*sin(phi(i))-F*delta_p(i)+u(i));
 phi_pp = (1/l)* (g*sin(phi(i))-delta_pp*cos(phi(i)));
@@ -58,10 +58,10 @@ phi_p(i+1) = phi_p(i) + t_etapa*phi_pp;
 phi(i+1) = phi(i) + t_etapa*phi_p(i);
 end
 
-% Gr醘icas
+% Gr谩ficas
 figure
 plot(t,u,'r');
-title('Acci髇 de control');
+title('Acci贸n de control');
 xlabel('Tiempo [s]');
 legend('u(t)');
 grid on;
@@ -71,17 +71,17 @@ plot(t,delta,'r');
 grid on;
 hold on;
 plot(t,ref);
-title('Posici髇 del carro');
+title('Posici贸n del carro');
 xlabel('Tiempo [s]');
 ylabel('Distancia [m]');
-legend('?(t)', "referencia");
+legend('胃(t)', "referencia");
 
 figure
 plot(t,phi,'r');
-title('羘gulo del p閚dulo');
+title('脕ngulo del p茅ndulo');
 xlabel('Tiempo [s]');
-ylabel('羘gulo [rad]');
-legend('?(t)');
+ylabel('脕ngulo [rad]');
+legend('胃(t)');
 grid on;
 
 
