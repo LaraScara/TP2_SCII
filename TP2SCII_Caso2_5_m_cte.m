@@ -1,8 +1,8 @@
-% Caso de estudio 2 - PÈndulo invertido apartado 5
+% Caso de estudio 2 - P√©ndulo invertido apartado 5
 % masa constante en 1
 clc;clear all;close all
 
-% Par·metros
+% Par√°metros
 m = 1;
 F = 0.1;
 l = 1.6;
@@ -38,7 +38,7 @@ phi_pp = 0;
 
 limite = tiempo/2;
 
-% IteraciÛn
+% Iteraci√≥n
 for i=1:1:tiempo
     x = [delta(i); delta_p(i); phi(i); phi_p(i); dseta(i)];
 
@@ -62,14 +62,14 @@ hold on
 plot(t,delta,'r');
 title('Desplazamiento del carro');
 xlabel('Tiempo [s]');
-ylabel('PosiciÛn [m]');
+ylabel('Posici√≥n [m]');
 legend('referencia','?(t)');
 grid on;
 
 figure
 plot(t,phi,'r');
-title('¡ngulo del pÈndulo');
+title('√Ångulo del p√©ndulo');
 xlabel('Tiempo [s]');
-ylabel('¡ngulo [rad]');
+ylabel('√Ångulo [rad]');
 legend('?(t)');
 grid on;
