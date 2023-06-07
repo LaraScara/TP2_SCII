@@ -1,7 +1,7 @@
-% Caso de estudio 2 - PÈndulo invertido apartado 5
+% Caso de estudio 2 - P√©ndulo invertido apartado 5
 clc; clear ; close all
 
-% Par·metros
+% Par√°metros
 m = 0.1;
 F = 0.1;
 l = 1.6;
@@ -52,7 +52,7 @@ X(4,1) = 0;   %phi_p    inicial
 psi(1) = 0;         %psi      inicial
 U(1) = 0; 
 
-% IteraciÛn
+% Iteraci√≥n
 for i=1:1:n-1
     X_a = X(:,i);%[delta ; delta_p ; phi ; phi_p ]
     
@@ -71,7 +71,7 @@ for i=1:1:n-1
     X(:,i+1) = Xf;
 end
 
-% Gr·ficas
+% Gr√°ficas
 figure
 %subplot(2,1,1);
 plot(t,ref,'b');
@@ -79,7 +79,7 @@ hold on;
 plot(t,X(1,:),'r');
 title('Desplazamiento del carro');
 xlabel('Tiempo [s]');
-ylabel('PosiciÛn [m]');
+ylabel('Posici√≥n [m]');
 legend('referencia','?(t)');
 grid on;
 
@@ -90,15 +90,15 @@ figure
 hold on;
 plot(t,X(3,:),'r');
 axis([0 tf 3.13 3.15]);
-title('¡ngulo del pÈndulo');
+title('√Ångulo del p√©ndulo');
 xlabel('Tiempo [s]');
-ylabel('¡ngulo [rad]');
+ylabel('√Ångulo [rad]');
 legend('?(t)');
 grid on;
 
 figure
 plot(t,U,'r');
-title('AcciÛn de control');
+title('Acci√≥n de control');
 xlabel('Tiempo [s]');
 legend('u(t)');
 grid on;
