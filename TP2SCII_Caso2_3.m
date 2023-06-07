@@ -71,10 +71,10 @@ plot(t,delta,'r');
 grid on;
 hold on;
 plot(t,ref);
-title('Posición del carro');
+title('Desplazamiento del carro');
 xlabel('Tiempo [s]');
-ylabel('Distancia [m]');
-legend('θ(t)', "referencia");
+ylabel('Posición [m]');
+legend('referencia','δ(t)');
 
 figure
 plot(t,phi,'r');
