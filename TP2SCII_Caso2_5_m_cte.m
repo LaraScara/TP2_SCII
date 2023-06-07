@@ -63,7 +63,7 @@ plot(t,delta,'r');
 title('Desplazamiento del carro');
 xlabel('Tiempo [s]');
 ylabel('Posición [m]');
-legend('referencia','?(t)');
+legend('referencia','δ(t)');
 grid on;
 
 figure
@@ -71,5 +71,5 @@ plot(t,phi,'r');
 title('Ángulo del péndulo');
 xlabel('Tiempo [s]');
 ylabel('Ángulo [rad]');
-legend('?(t)');
+legend('θ(t)');
 grid on;
