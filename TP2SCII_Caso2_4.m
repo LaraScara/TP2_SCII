@@ -97,9 +97,9 @@ hold on
 plot(t,Xc(1,:),'r');
 hold on
 plot(t,X(1,:),'color',[0.4660 0.6740 0.1880]);
-title('Posición del carro');
+title('Desplazamiento del carro');
 xlabel('Tiempo [s]');
-ylabel('Distancia [m]');
+ylabel('Posición [m]');
 legend('referencia','sin observador','con observador');
 
 figure
