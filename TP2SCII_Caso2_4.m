@@ -111,7 +111,7 @@ plot(t,X(3,:),'color',[0.4660 0.6740 0.1880]);
 title('Ángulo del péndulo');
 xlabel('Tiempo [s]');
 ylabel('Ángulo [rad]');
-legend('θ(t)');legend('sin observador','con observador');
+legend('sin observador','con observador');
 
 figure
 plot(t,Ua,'r');
