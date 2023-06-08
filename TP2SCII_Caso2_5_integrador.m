@@ -67,7 +67,7 @@ for i=1:1:n-1
     Xp_a4 = -F*X_a(2)/(M*l)-g*(M+masa(i))*(X_a(3)-pi)/(M*l)-Ua/(M*l);
     
     Xp_a = [Xp_a1 ; Xp_a2 ; Xp_a3 ; Xp_a4];
-    Xf = X_a+ dt*(Xp_a); % Realizamos la integracion de euler y actualizamos matriz X
+    Xf = X_a+ dt*(Xp_a);
     X(:,i+1) = Xf;
 end
 
