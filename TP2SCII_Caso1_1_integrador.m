@@ -22,23 +22,22 @@ Ob = obsv(A,C);
 rank(Ob); % = 3 por ende es observable
 
 % Matrices ampliadas debido al integrador
-An=[A zeros(3,1); -C 0];
-Bn=[B ; 0];
-Cn=[C 0];
+An = [A zeros(3,1); -C 0];
+Bn = [B ; 0];
+Cn = [C 0];
 
 % Implementación de funciones a usar
-tf = 30; dt = 1*10^-5; t = 0:dt:(tf-dt); per = 15; %[seg]
+tf = 350; dt = 1*10^-5; t = 0:dt:(tf-dt); per = 110; %[seg]
 Tl = 1.15*10^-3;
 ref = pi/2*square(2*pi*t/per); % Función de referencia que varia entre pi/2 y -pi/2
 fTl = Tl/2*square(2*pi*t/per)+Tl/2; % Función de torque que varia entre 0 y 1.15*10^-3
 
 % LQR
-Q = diag([35 10/1 1/1 13000000]);
-R = 500;
+Q = diag([1100 1/100 1/100 10000/2]);
+R = 3200;
 Ka = lqr(An,Bn,Q,R);
 K_i = -Ka(4);
 K = Ka(1:3);
-Kn = [K -K_i];
 
 % Condiciones iniciales
 n = round(tf/dt);
@@ -71,7 +70,7 @@ for i=1:1:n-1
     %X(:,i+1)=Xf;
 end
 
-% Ploteo de entrada con ganancia de prealimentacion U  y perturbacion TL
+% Gráficas
 figure
 hold on; grid on;
 plot(t,ref);
@@ -87,17 +86,15 @@ xlabel('Tiempo [s]');
 ylabel('Torque [Nm]');
 
 figure
-%subplot(2,1,1);
 plot(t,ref);
 hold on; grid on;
 plot(t,X(2,:),'r');
 title('Posición angular del motor');
 xlabel('Tiempo [s]');
 ylabel('Posición angular [rad]');
-legend('referencia','θ(t)')
+legend('referencia','?(t)')
 
 figure
-%subplot(2,1,2);
 hold on; grid on;
 plot(t,X(1,:),'r');
 title('Corriente de armadura');
