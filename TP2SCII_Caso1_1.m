@@ -9,7 +9,7 @@ Bm = 0.005;
 Ki = 6.5*10^-5;
 Km = 0.055;
 
-% Matrices ; X=[ia ; tita ; w];
+% Matrices ; X = [ia ; tita ; w];
 A = [-Ra/Laa 0 -Km/Laa  ; 0 0 1 ; Ki/J 0 -Bm/J];
 B = [1/Laa; 0; 0];
 C = [0 1 0];
