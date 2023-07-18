@@ -32,18 +32,21 @@ Bo = C';
 Co = B';
 
 % LQR	
-Q = diag([10 1/1 1/1 1000000/1]);
-R = 500;
+% Q = diag([10 1/1 1/1 1000000/1]);
+% R = 500;
+Q = diag([1000 1/100 1/100 10000/2]);
+R = 3000;
 K4 = lqr(An,Bn,Q,R);
 K = K4(1:3);
 K_i = -K4(4);
 
 Qo = diag([1 100000/1 1/1]);
-Ro = 5;
+Ro = 8;
 Ko = lqr(Ao,Bo,Qo,Ro);
 
+
 % Implementación de funciones a usar
-tf = 30; dt = 1*10^-5; t = 0:dt:(tf-dt); per = 15; %[seg]
+tf = 350; dt = 1*10^-5; t = 0:dt:(tf-dt); per = 110; %[seg]
 Tl = 1.15*10^-3;
 ref = pi/2*square(2*pi*t/per); % Función de referencia que varia entre pi/2 y -pi/2
 fTl = Tl/2*square(2*pi*t/per)+Tl/2; % Función de torque que varia entre 0 y 1.15*10^-3
@@ -52,7 +55,7 @@ fTl = Tl/2*square(2*pi*t/per)+Tl/2; % Función de torque que varia entre 0 y 1.1
 n = round(tf/dt);
 X = zeros(3,n);
 X(1,1) = 0; %ia inicial
-X(2,1) = 0; %tita inicial
+X(2,1) = 0; %tita inicia
 X(3,1) = 0; %w inicial
 psi(1) = 0; %psi inicial
 Xhat = zeros(3,n);
@@ -94,7 +97,6 @@ end
 
 % Gráficas
 figure
-%subplot(2,1,1);
 plot(t,ref);
 grid on
 hold on
@@ -102,10 +104,9 @@ plot(t,X(2,:),'r');
 title('Posición angular del motor');
 xlabel('Tiempo [s]');
 ylabel('Posición angular [rad]');
-legend('referencia','θ(t)')
+legend('referencia','?(t)')
 
 figure
-%subplot(2,1,2);
 grid on
 hold on
 plot(t,X(1,:),'r');
