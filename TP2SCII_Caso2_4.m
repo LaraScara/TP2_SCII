@@ -9,9 +9,9 @@ g = 9.8;
 M = 1.5; 
 
 % Matrices x = [delta ; delta_p ; phi ; phi_p]
-A = [0,1,0,0 ; 0,(-F/M),(-m*g/M),0 ; 0,0,0,1 ; 0,(F/(l*M)),(((M+m)*g)/(l*M)),0 ];
+A = [0 1 0 0 ; 0 (-F/M) (-m*g/M) 0 ; 0 0 0 1 ; 0 (F/(l*M)) (((M+m)*g)/(l*M)) 0];
 B = [0 ; (1/M) ; 0 ; (-1/(l*M))];
-C = [1,0,0,0];
+C = [1 0 0 0; 0 0 1 0];
 D = 0;
 
 % Controlabilidad y observabilidad
@@ -21,9 +21,9 @@ Ob = obsv(A,C);
 rank(Ob); % = 4 por ende es observable
 
 % Matrices del sistema observador
-Ao=A';
-Bo=C';
-Co=B';
+Ao = A';
+Bo = C';
+Co = B';
 
 % LQR
 Q = diag([1 1 1000 10000]);
@@ -31,11 +31,11 @@ R = 10;
 K = lqr(A,B,Q,R);
 
 Qo = diag([1 10/1 1 10/1]); 
-Ro = 5;
+Ro = diag([5 0.001]);
 Ko = lqr(Ao,Bo,Qo,Ro);
 
 %Ganancia de prealimentacion
-G = -inv(C*inv(A-B*K)*B);
+G = -inv(C(1,:)*inv(A-B*K)*B);
 
 % Condidiones iniciales
 tf = 30; dt = 1*10^-3; t = 0:dt:(tf-dt); 
@@ -69,8 +69,8 @@ ref = -10*ones(1,n);
 for i=1:1:n-1
     X_a = X(:,i);         %[delta ; delta_p ; phi ; phi_p ]
     Xhat_a = Xhat(:,i);   %[deltahat deltahat_p phihat phihat_p] 
-    Y = X_a*C;
-    Yhat = Xhat_a*C;
+    Y = C*X_a;
+    Yhat = C*Xhat_a;
     err = Y-Yhat;
     Ua(i+1)=-K*Xhat_a+ref(i)*G;
     
@@ -78,7 +78,7 @@ for i=1:1:n-1
     X(:,i+1) = X_a+ dt*Xp_a;
   
     % Observador
-    Xhat_p = err*Ko'+A*Xhat_a+Ua(i)*B;
+    Xhat_p = Ko'*err+A*Xhat_a+B*Ua(i);
     Xhat(:,i+1) = Xhat_a+dt*Xhat_p;
     
     % Sistema sin observador
@@ -113,11 +113,11 @@ xlabel('Tiempo [s]');
 ylabel('Ángulo [rad]');
 legend('sin observador','con observador');
 
-figure
-plot(t,Ua,'r');
-title('Acción de control');
-xlabel('Tiempo [s]');
-legend('u(t)');
-grid on;
+% figure
+% plot(t,Ua,'r');
+% title('Acción de control');
+% xlabel('Tiempo [s]');
+% legend('u(t)');
+% grid on;
 
 disp("Terminado")
