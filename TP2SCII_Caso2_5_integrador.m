@@ -17,6 +17,12 @@ B = [0; 1/M; 0; -1/(l*M)];
 C = [1 0 0 0; 0 0 1 0];
 D = 0;
 
+% Controlabilidad y observabilidad
+Co = ctrb(A, B);
+rank(Co) % = 4 por ende es controlable
+Ob = obsv(A,C);
+rank(Ob) % = 4 por ende es observable
+
 % Matrices ampliadas debido al integrador
 An = [A zeros(4,1) ; -(C(1,:)) 0];
 Bn = [B ; 0];
