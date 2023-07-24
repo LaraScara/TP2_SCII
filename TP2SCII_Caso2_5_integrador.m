@@ -79,7 +79,7 @@ plot(t,X(1,:),'r');
 title('Desplazamiento del carro');
 xlabel('Tiempo [s]');
 ylabel('Posición [m]');
-legend('referencia','?(t)');
+legend('referencia','δ(t)');
 grid on;
 
 
@@ -90,7 +90,7 @@ axis([0 tf 3.13 3.15]);
 title('Ángulo del péndulo');
 xlabel('Tiempo [s]');
 ylabel('Ángulo [rad]');
-legend('?(t)');
+legend('θ(t)');
 grid on;
 
 figure
